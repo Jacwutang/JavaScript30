@@ -29,7 +29,7 @@
     :root{
       --spacing: 10px;
       --blur: 10px;
-      --base: yellow;
+      --base: #ffc600;
 
     }
 
@@ -65,24 +65,20 @@
 
   <script>
 
-    // const updateInput = () => {
-    //   console.log(this.value);
-    // }
-
-    function updateInput(){
-
-      const suffix = this.dataset.sizing || '';
-
-      //selects root element of document
-      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
-    }
+  const inputs = document.querySelectorAll('.controls input');
 
 
-    const inputs = document.querySelectorAll('.controls input');
 
+  function handleUpdate(){
+    const suffix = this.dataset.sizing || '';
+    
+    document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix );
 
-    inputs.forEach(input => input.addEventListener('change', updateInput));
-    inputs.forEach(input => input.addEventListener('mousemove', updateInput));
+  }
+
+  inputs.forEach(input => input.addEventListener('change',handleUpdate));
+  inputs.forEach(input => input.addEventListener('mousemove',handleUpdate));
+
 
 
 
