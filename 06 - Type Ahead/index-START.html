@@ -19,51 +19,65 @@ const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb
 
 const cities = [];
 
+
 fetch(endpoint)
-  .then(resp => resp.json())
+  .then(data => data.json())
   .then(data => cities.push(...data));
 
 
-function findMatches(wordToMatch, cities){
-  return cities.filter(place => {
-    const regex = new RegExp(wordToMatch, 'gi');
-    return place.city.match(regex) || place.state.match(regex)
+const searchInput = document.querySelector('input');
+const suggestions = document.querySelector('ul');
+searchInput.addEventListener('change', displayMatches);
+searchInput.addEventListener('keyup', displayMatches);
 
-  })
-};
+
+
+function findMatches(pattern){
+
+    let regex = new RegExp(pattern,'gi');
+
+    return cities.filter((place) =>(
+      place.city.match(regex) ) || place.state.match(regex))
+
+
+
+}
 
 function displayMatches(){
-    const matchArray = findMatches(this.value, cities);
-    const html = matchArray.map( (place) => {
-      const regex = new RegExp(this.value,'gi');
 
 
-      const cityName = place.city.replace(regex, `<span class="hl"> ${this.value} </span>`);
-      const stateName = place.state.replace(regex, `<span class="hl"> ${this.value} </span>`);
+  let matches = findMatches(this.value);
 
 
 
-      return `
-        <li>
-          <span class="name"> ${cityName}, ${stateName} </span>
-          <span class="population"> ${place.population} </span>
-        </li>
-
-      `
-    }).join("")
-
-    suggestions.innerHTML = html;
 
 
 
-};
+  let html = matches.map ((match) => {
+    let regex = new RegExp(this.value, 'gi');
+    let cityName = match.city.replace(regex, `<span class="hl"> ${this.value}</span>`);
+    let stateName = match.state.replace(regex, `<span class="hl"> ${this.value}</span>`);
 
-const searchInput = document.querySelector('.search');
+    return `
+      <li>
+        <span class="name"> ${cityName}, ${stateName} </span>
+        <span> ${match.population} </span>
+      </li>
+    `;
 
-searchInput.addEventListener('keyup', displayMatches);
-searchInput.addEventListener('change', displayMatches);
+  });
 
-const suggestions = document.querySelector('.suggestions');
+  suggestions.innerHTML = html;
+
+
+
+
+
+
+}
+
+
+
 
 
 
