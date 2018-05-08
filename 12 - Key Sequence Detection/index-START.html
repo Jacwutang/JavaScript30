@@ -8,25 +8,32 @@
 <body>
 <script>
 
-  const secret = "jack";
   const pressed = [];
-
+  const secret = 'jack';
   window.addEventListener('keyup', (e) => {
+
     pressed.push(e.key);
 
-    // when arrow overflows size of secret.length
-    // trim the first element and remove it from the array
-    pressed.splice(-secret.length - 1, pressed.length - secret.length )
+    pressed.splice(-secret.length, pressed.length - secret.length);
+    // from -4 get rid of....
 
-    // [j,a,c,k,s] --> [a,c,k,s]
-    //
-    console.log(pressed);
-    if(pressed.join("").includes(secret) ){
-      window.alert("CORRECT");
+    // -4, -3
+    // -4,-2,
+    // -4,-1,
+    // -4,0
+    // -4,1
+    // -4,1
+    // -4,1
+
+
+
+    if(pressed.join("") === secret){
+      window.alert("winner");
     }
 
-  });
 
+
+  })
 
 
 
