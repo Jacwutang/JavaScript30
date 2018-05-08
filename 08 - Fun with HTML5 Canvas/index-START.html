@@ -7,47 +7,6 @@
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
-const canvas = document.querySelector('#draw');
-const ctx = canvas.getContext('2d');
-
-canvas.height = window.innerHeight;
-canvas.width  = window.innerWidth;
-
-
-ctx.lineJoin = 'round';
-ctx.lineCap = 'round';
-ctx.strokeStyle = '#BADA55';
-
-let lastX = 0;
-let lastY = 0;
-let isDrawing = false;
-
-const draw = (e) => {
-  if(!isDrawing)
-    return;
-ctx.beginPath();
-ctx.moveTo(lastX,lastY);
-ctx.lineTo(e.offsetX,e.offsetY);
-ctx.stroke();
-[lastX,lastY] = [e.offsetX,e.offsetY];
-}
-
-canvas.addEventListener('mousemove', draw);
-
-
-canvas.addEventListener('mousedown', (e) => {
-  isDrawing = true;
-
-
-  //mousedown goes first, then mousemove is triggered. somehow draw has access to
-  //
-  [lastX,lastY] = [e.offsetX,e.offsetY];
-
-});
-canvas.addEventListener('mouseup', () => isDrawing = false);
-canvas.addEventListener('mouseout', () => isDrawing = false);
-//
-
 
 
 </script>
