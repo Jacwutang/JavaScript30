@@ -10,9 +10,38 @@
   </div>
 
 <script>
-  window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+//Use window's SpeechRecognition API to create paragraph elements and append it to div class words.
 
+window.SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
 
+//make new recognition object
+const recognition = new SpeechRecognition();
+//allow interim results to be calculated
+recognition.interimResults = true;
+
+//create paragraph element and append to words as child.
+let p = document.createElement("p");
+let words = document.querySelector(".words");
+words.appendChild(p);
+
+//add event listener to recognition obj
+recognition.addEventListener("result", e => {
+  let transcript = Array.from(e.results)
+    .map(result => result[0])
+    .map(result => result.transcript)
+    .join("");
+  p.textContent = transcript;
+
+  if (e.results[0].isFinal) {
+    p = document.createElement("p");
+    words.appendChild(p);
+  }
+});
+
+recognition.addEventListener("end", recognition.start);
+
+recognition.start();
 </script>
 
 
