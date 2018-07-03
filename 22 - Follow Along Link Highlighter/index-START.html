@@ -26,8 +26,36 @@
     </div>
 
   <script>
-    // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
-  </script>
+  // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+
+//select all a
+let triggers = document.querySelectorAll("a");
+
+let highlight = document.createElement("span");
+
+highlight.classList.add("highlight");
+
+document.body.append(highlight);
+
+triggers.forEach(trigger =>
+  trigger.addEventListener("mouseenter", addHighlight)
+);
+
+function addHighlight() {
+  //get top,left,width,height
+  let triggerCords = this.getBoundingClientRect();
+
+  //return modified top and left with respect to browser
+  let coords = {
+    width: triggerCords.width,
+    height: triggerCords.height,
+    top: window.scrollX + triggerCords.left,
+    left: window.scrollY + triggerCords.top
+  };
+  highlight.style.width = `${coords.width}px`;
+  highlight.style.height = `${coords.height}px`;
+  highlight.style.transform = `translate(${coords.left}px, ${coords.top}px)`;
+}
+</script>
 </body>
 </html>
-
